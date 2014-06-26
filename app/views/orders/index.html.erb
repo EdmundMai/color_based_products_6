@@ -1,0 +1,25 @@
+<%= link_to "Account Settings", account_path %>
+
+
+
+<%= will_paginate @orders %>
+<table>
+	<thead>
+<th>ID</th>
+<th>Order Date</th>
+<th>Status</th>
+<th>Email</th>
+<th>Total</th>
+</thead>
+<% @orders.each do |order| %>
+<tr>
+
+	<td><%= link_to order.id, account_order_path(order) %></td>
+	<td><%= order.order_date.try(:strftime, "%m/%d/%Y") %></td>
+	<td><%= order.status %></td>
+	<td><%= order.user.guest? ? order.user.guest_email : order.user.email %></td>
+	<td><%= humanized_money_with_symbol order.total %></td>
+
+</tr>
+<% end %>
+</table>
